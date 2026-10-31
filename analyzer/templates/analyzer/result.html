@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body class="bg-light">
+
+    <div class="container py-5">
+
+        <h1 class="text-center mb-4">AI Resume Analyzer</h1>
+
+        <!-- Resume Score -->
+        <div class="card shadow-sm mb-4 text-center">
+            <div class="card-body">
+                <h3>Resume Score</h3>
+                <h1 class="display-4 text-primary">
+                    {{ score }}/100
+                </h1>
+            </div>
+        </div>
+
+        <!-- Resume Sections -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Resume Sections</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+
+                    {% for section, found in sections.items %}
+                    <div class="col-md-6 mb-3">
+                        <div class="border rounded p-3 d-flex justify-content-between">
+                            <strong>{{ section }}</strong>
+
+                            {% if found %}
+                                <span class="badge badge-success">Present</span>
+                            {% else %}
+                                <span class="badge badge-danger">Missing</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Detected Skills -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Detected Skills</h4>
+            </div>
+
+            <div class="card-body">
+                {% for skill in skills %}
+                    <span class="badge badge-primary p-2 m-1">
+                        {{ skill }}
+                    </span>
+                {% empty %}
+                    <p>No skills detected.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Strengths and Suggestions -->
+        <div class="row">
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Strengths</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for strength in strengths %}
+                                <li class="list-group-item">{{ strength }}</li>
+                            {% empty %}
+                                <li class="list-group-item">No strengths found.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header bg-warning">
+                        <h4 class="mb-0">Suggestions for Improvement</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for suggestion in suggestions %}
+                                <li class="list-group-item">{{ suggestion }}</li>
+                            {% empty %}
+                                <li class="list-group-item">No suggestions.</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Extracted Resume Text -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Extracted Resume Text</h4>
+            </div>
+
+            <div class="card-body">
+                <pre class="text-wrap">{{ text }}</pre>
+            </div>
+        </div>
+
+        <!-- Back Button -->
+        <div class="text-center">
+            <a href="/" class="btn btn-dark">
+                Analyze Another Resume
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
